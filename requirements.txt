@@ -1,0 +1,7 @@
+streamlit
+pandas
+openai
+cohere
+llama_index
+PyPDF2
+uuid
