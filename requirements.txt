@@ -3,5 +3,7 @@ pandas
 openai
 cohere
 llama_index
+llama-index-llms-openai
+llama-index-llms-cohere
 PyPDF2
 uuid
