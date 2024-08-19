@@ -58,15 +58,16 @@ def read_file(file_path):
         # Convert non-empty rows to a list of dictionaries
         non_empty_rows = df.dropna(how='all').to_dict('records')
         
-        # Join non-empty rows into a string, with each row on a new line
-        content = '\n'.join([str(row) for row in non_empty_rows if row])
-        return content
+        return non_empty_rows
     return None
 
 def create_documents(content, file_name):
     documents = []
-    if content and content.strip():
-        documents.append(Document(text=content, doc_id=file_name))
+    if content and isinstance(content, list):
+        for row in content:
+            row_content = ' '.join(f"{k}: {v}" for k, v in row.items() if pd.notna(v))
+            if row_content.strip():
+                documents.append(Document(text=row_content, doc_id=file_name))
     return documents
 
 with st.sidebar:
