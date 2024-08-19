@@ -76,21 +76,23 @@ def retrieve_documents(query_engine, query, top_k=3):
     """Retrieve top-k relevant documents based on the query."""
     response = query_engine.query(query)
     
-    # Debugging output
-    print(f"Query: {query}")
-    print(f"Response: {response}")
-    
     documents = []
     try:
-        for i, doc_response in enumerate(response):
-            if i >= top_k:
-                break
-            documents.append(doc_response["content"])
+        # If the response is a StreamingResponse, iterate over it
+        if hasattr(response, 'response_gen'):
+            for i, chunk in enumerate(response.response_gen):
+                if i >= top_k:
+                    break
+                # Assuming each chunk contains content to be added
+                documents.append(chunk.get("content", "No content available"))
+        else:
+            raise TypeError("Expected StreamingResponse with response_gen, got: {}".format(type(response)))
     except Exception as e:
         print(f"Error while iterating over response: {e}")
         raise
 
     return documents
+
 
 with st.sidebar:
     API_KEY = "nkBaDhoReFHy9tsZ9QyowMIE6qhtBLirGNN5GhXc"
@@ -217,13 +219,17 @@ if prompt := st.chat_input("What's up?"):
             context = "\n\n".join(retrieved_docs)
             
             # Simulate stream of response with milliseconds delay
-            full_response = st.session_state.query_engine.query(prompt, context=context)
+            response = st.session_state.query_engine.query(prompt, context=context)
             
-            for chunk in full_response.response_gen:
-                full_response += chunk
-                message_placeholder.markdown(full_response + "▌")
+            # If it's a streaming response, handle it appropriately
+            if hasattr(response, 'response_gen'):
+                for chunk in response.response_gen:
+                    full_response += chunk
+                    message_placeholder.markdown(full_response + "▌")
 
-            message_placeholder.markdown(full_response)
+                message_placeholder.markdown(full_response)
+            else:
+                st.error("Unexpected response format.")
         else:
             st.error("Query engine is not initialized. Please upload documents first.")
 
