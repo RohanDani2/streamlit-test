@@ -75,11 +75,21 @@ def create_documents(files):
 def retrieve_documents(query_engine, query, top_k=3):
     """Retrieve top-k relevant documents based on the query."""
     response = query_engine.query(query)
+    
+    # Debugging output
+    print(f"Query: {query}")
+    print(f"Response: {response}")
+    
     documents = []
-    for i, doc_response in enumerate(response):
-        if i >= top_k:
-            break
-        documents.append(doc_response["content"])
+    try:
+        for i, doc_response in enumerate(response):
+            if i >= top_k:
+                break
+            documents.append(doc_response["content"])
+    except Exception as e:
+        print(f"Error while iterating over response: {e}")
+        raise
+
     return documents
 
 with st.sidebar:
