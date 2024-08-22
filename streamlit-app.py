@@ -129,7 +129,7 @@ def process_file(file, temp_dir, progress_bar):
 st.title("Syncquire - Chat with Docs")
 
 with st.sidebar:
-    API_KEY = os.getenv("COHERE_API_KEY")
+    API_KEY = "nkBaDhoReFHy9tsZ9QyowMIE6qhtBLirGNN5GhXc"
     
     uploaded_files = st.file_uploader("Choose your files", type=["pdf", "csv", "xlsx"], accept_multiple_files=True)
 
