@@ -1,12 +1,5 @@
 streamlit
 pandas
-openai
+llama-index
 cohere
-llama_index
-llama-index-llms-openai
-llama-index-llms-cohere
-llama-index-embeddings-cohere
-llama-index-postprocessor-cohere-rerank
-PyPDF2
-uuid
 openpyxl
