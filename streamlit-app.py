@@ -14,6 +14,9 @@ from llama_index.postprocessor.cohere_rerank import CohereRerank
 
 import streamlit as st
 
+import nltk
+nltk.download('punkt')
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
