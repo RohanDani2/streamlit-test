@@ -3,4 +3,3 @@ pandas
 llama-index
 cohere
 openpyxl
-dotenv

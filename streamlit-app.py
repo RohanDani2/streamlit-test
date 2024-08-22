@@ -6,7 +6,6 @@ import uuid
 import logging
 
 import pandas as pd
-from dotenv import load_dotenv
 
 from llama_index.core import Settings, VectorStoreIndex, SimpleDirectoryReader, PromptTemplate, Document
 from llama_index.llms.cohere import Cohere
