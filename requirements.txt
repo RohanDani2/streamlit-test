@@ -3,3 +3,4 @@ pandas
 llama-index
 cohere
 openpyxl
+nltk
